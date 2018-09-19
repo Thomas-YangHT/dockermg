@@ -1,0 +1,213 @@
+﻿<?php
+session_start(); 
+if(!isset($_SESSION['login_status']))    
+	header('Location:login.html');
+?>
+<?php
+function ShowUpProjHtmlhead(){
+echo " <html>  \n";
+echo "<head>\n";
+header("Refresh:3000"); 
+echo "  <meta charset='utf-8'>\n";
+echo "  <meta name='viewport' content='width=device-width, initial-scale=1'>\n";
+echo "  <title>欢迎您使用docker同步项目程序</title>\n";
+
+echo "<!-- CSS goes in the document HEAD or added to your external stylesheet --> \n";
+echo " <style type='text/css'> \n";
+echo ".basic-grey {";
+echo "margin-top:10px;";
+echo "margin-left:10px;";
+echo "margin-right:auto;";
+echo "max-width: 500px;";
+echo "background: #F7F7F7;";
+echo "padding: 25px 15px 25px 10px;";
+echo "font: 12px Georgia, \"Times New Roman\", Times, serif;";
+echo "color: #888;";
+echo "text-shadow: 1px 1px 1px #FFF;";
+echo "border:1px solid #E4E4E4;";
+echo "}";
+echo ".basic-grey h1 {";
+echo "font-size: 25px;";
+echo "padding: 0px 0px 10px 40px;";
+echo "display: block;";
+echo "border-bottom:1px solid #E4E4E4;";
+echo "margin: -10px -15px 30px -10px;";
+echo "color: #888;";
+echo "}";
+echo ".basic-grey h1>span {";
+echo "display: block;";
+echo "font-size: 11px;";
+echo "}";
+echo ".basic-grey label {";
+echo "display: block;";
+echo "margin: 0px;";
+echo "}";
+echo ".basic-grey label>span {";
+echo "float: left;";
+echo "width: 20%;";
+echo "text-align: right;";
+echo "padding-right: 10px;";
+echo "margin-top: 10px;";
+echo "color: #888;";
+echo "}";
+echo ".basic-grey input[type=\"text\"], .basic-grey input[type=\"email\"], .basic-grey textarea, .basic-grey select {";
+echo "border: 1px solid #DADADA;";
+echo "color: #888;";
+echo "height: 30px;";
+echo "margin-bottom: 16px;";
+echo "margin-right: 6px;";
+echo "margin-top: 2px;";
+echo "outline: 0 none;";
+echo "padding: 3px 3px 3px 5px;";
+echo "width: 70%;";
+echo "font-size: 12px;";
+echo "line-height:15px;";
+echo "box-shadow: inset 0px 1px 4px #ECECEC;";
+echo "-moz-box-shadow: inset 0px 1px 4px #ECECEC;";
+echo "-webkit-box-shadow: inset 0px 1px 4px #ECECEC;";
+echo "}";
+echo ".basic-grey textarea{";
+echo "padding: 5px 3px 3px 5px;";
+echo "}";
+echo ".basic-grey select {";
+echo "background: #FFF  no-repeat right;";
+//echo "background: #FFF url('down-arrow.png') no-repeat right;";
+echo "appearance:none;";
+echo "-webkit-appearance:none;";
+echo "-moz-appearance: none;";
+echo "text-indent: 0.01px;";
+echo "text-overflow: '';";
+echo "width: 70%;";
+echo "height: 35px;";
+echo "line-height: 25px;";
+echo "}";
+echo ".basic-grey textarea{";
+echo "height:100px;";
+echo "}";
+echo ".basic-grey .button {";
+echo "background: #E27575;";
+echo "border: none;";
+echo "padding: 10px 25px 10px 25px;";
+echo "color: #FFF;";
+echo "box-shadow: 1px 1px 5px #B6B6B6;";
+echo "border-radius: 3px;";
+echo "text-shadow: 1px 1px 1px #9E3F3F;";
+echo "cursor: pointer;";
+echo "}";
+echo ".basic-grey .button:hover {";
+echo "background: #CF7A7A";
+echo "}";
+
+echo " .shiny-blue {\n";
+echo "   background-color: #759ae9;\n";
+echo "   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #759ae9), color-stop(50%, #376fe0), color-stop(50%, #1a5ad9), color-stop(100%, #2463de));\n";
+echo "   background-image: -webkit-linear-gradient(top, #759ae9 0%, #376fe0 50%, #1a5ad9 50%, #2463de 100%);\n";
+echo "   background-image: -moz-linear-gradient(top, #759ae9 0%, #376fe0 50%, #1a5ad9 50%, #2463de 100%);\n";
+echo "   background-image: -ms-linear-gradient(top, #759ae9 0%, #376fe0 50%, #1a5ad9 50%, #2463de 100%); \n";
+echo "   background-image: -o-linear-gradient(top, #759ae9 0%, #376fe0 50%, #1a5ad9 50%, #2463de 100%);\n";
+echo "   background-image: linear-gradient(top, #759ae9 0%, #376fe0 50%, #1a5ad9 50%, #2463de 100%);\n";
+echo "   border-top: 1px solid #1f58cc;\n";
+echo "   border-right: 1px solid #1b4db3;\n";
+echo "   border-bottom: 1px solid #174299; \n";
+echo "   border-left: 1px solid #1b4db3; \n";
+echo "   border-radius: 4px; \n";
+echo "   -webkit-box-shadow: inset 0 0 2px 0 rgba(57, 140, 255, 0.8);\n";
+echo "   box-shadow: inset 0 0 2px 0 rgba(57, 140, 255, 0.8); \n";
+echo "   color: #fff; \n";
+echo "   font: bold 12px/1 'helvetica neue', helvetica, arial, sans-serif;\n";
+echo "   padding: 7px 0; \n";
+echo "   text-shadow: 0 -1px 1px #1a5ad9;\n";
+echo "max-width: 500px;";
+//echo "   width:100px;\n";
+echo "    }\n";
+echo " </style>\n";
+echo " </head>\n";
+echo "<body style='margin:0 auto;align:center;'>\n";
+}
+
+
+function GetSvnProj(){
+	global $MysqlHost;
+	global $MysqlPass;
+	global $MysqlUser;
+	global $dkdb;	
+	$conn=mysql_connect($MysqlHost,$MysqlUser,$MysqlPass)	or die("无法连接数据库，请重来");
+    mysql_select_db($dkdb,$conn);	
+	
+	$sql="select * from svnproject"; 
+	$res=mysql_query($sql,$conn);
+    $rows=mysql_affected_rows($conn);//获取行数
+    $colums=mysql_num_fields($res);//获取列数
+	global $projnames;
+	global $projectres;
+	$projnames=array();
+	$projectres=array();
+	$j=0;
+    while($row=mysql_fetch_array($res)){
+        //for($i=0; $i<$colums; $i++){ 
+        //}
+		$projnames[]=$j."-".$row[projname];
+		$projectres[]=$row;
+		$j++;
+    }
+}
+
+function showsyncform(){
+	global $projnames;
+	echo "<form name='form' action='$PHP_SELF' method='post' class='basic-grey'> \n";
+	echo "<h1>请选择需要同步的项目：</h1> ";
+   // echo "<br> <br>  \n ";	
+	echo "<label for='selprojname' ><span>项目名称</span>";
+    echo "<select name='selprojname' onclick=''>    \n ";
+    for ($i=0; $i<count($projnames); $i++) {
+        echo "<option value='".$projnames[$i]."'>".$projnames[$i]."</option>  \n ";
+    }
+    echo "</select>   \n ";
+	echo "</label>  ";
+   // echo "<br> <br>  \n ";
+	echo "<label>";
+	echo "<span>&nbsp;</span>";
+	echo "<input name='svncheckout' class='shiny-blue' type='submit' value=' SvnCheckout ' onclick=''/> \n";    
+	echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+	echo "<input name='svnupdate' class='shiny-blue' type='submit' value=' SvnUpdate ' onclick=''/> \n";    
+	echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+	echo "<input name='mvnproj' class='shiny-blue' type='submit' value=' MVN编译 ' onclick=''/> \n"; 
+
+	echo "</label>  ";	
+    echo "</form>\n"; 
+}
+//-----------------------Start svn & mvn Processing------------------------------------------------------------------------
+include_once("dkconfig.php");
+include_once("dkcommon.php");
+
+	GetSvnProj();
+	$selprojname=split('-',$_POST["selprojname"]);
+	$projid= $selprojname[0];
+	if( isset($_POST["svncheckout"]) ){
+		//$projectres[$projid][projname] $projectres[$projid][projname]
+		$cmd = "sudo -u root sh -c 'cd /root;svn checkout ".$projectres[$projid][url]." 2>&1 >>/root/svn.log' &";
+		runcmd($cmd);
+		writelog(date("Y.m.d H:i:sa l")." user: ".$_SESSION['user']." proj checkout ".$cmd);
+		echo "<meta http-equiv='refresh' content='2;url=tailsimple.php?filename=/root/svn.log&keyword=".$projectres[$projid][projname]."'>\n";
+		
+	}elseif( isset($_POST["svnupdate"]) ){
+		$cmd = "sudo -u root sh -c 'svn update ".$projectres[$projid][repodir]."/".$projectres[$projid][projname]." 2>&1 >>/root/svn.log' &";
+		runcmd($cmd);
+		writelog(date("Y.m.d H:i:sa l")." user: ".$_SESSION['user']." proj checkout ".$cmd);
+		echo "<meta http-equiv='refresh' content='2;url=tailsimple.php?filename=/root/svn.log&keyword=".$projectres[$projid][projname]."'>\n";
+		
+	}elseif( isset($_POST["mvnproj"]) ){
+		$cmd = "sudo -u root sh -c 'cd ".$projectres[$projid][mvndir].";mvn clean install  2>&1 >>/root/mvn.log' &";
+		runcmd($cmd);
+		writelog(date("Y.m.d H:i:sa l")." user: ".$_SESSION['user']." proj checkout ".$cmd);
+		echo "<meta http-equiv='refresh' content='2;url=tailsimple.php?filename=/root/mvn.log&keyword=".$projectres[$projid][projname]."'>\n";
+//$cmd = "sudo -u root sh -c 'cd ".$projectres[$projid][mvndir]."/target;jar -cvf ".$projectres[$projid][projname].".war ".$projectres[$projid][projname]."  2>&1 >>/root/mvn.log' &";	
+	}else{
+		ShowUpProjHtmlhead();
+		showsyncform();		
+	}
+	
+
+	echo "</body>\n";
+	echo "</html> \n";
+?>
